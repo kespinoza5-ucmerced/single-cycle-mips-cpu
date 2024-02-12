@@ -299,11 +299,6 @@ void CPU::execute(int signextend, int rs, int rt, int funct)
     {
         alu_zero = 0;
     }
-
-    // calculate the branch target address
-    // take the 26-bit input from fetch?
-    // Run shift-left-2 (you may want to use multiplication)
-    // merge it with the first 4 bits of the next_pc 
     
     mem(alu_result, rt);
 }
@@ -316,8 +311,8 @@ void CPU::mem(int alu_result, int rt)
     if (memread) // if control value signals LW
     {
         int address = alu_result;
-        int dataAtMemoryIndex = address / 4; //shitty name
-        writeback(alu_result, d_mem[dataAtMemoryIndex]); // guess I will after all lol ~~wanted to pass mem vector value generated from here but wont for now~~
+        int dataAtMemoryIndex = address / 4;
+        writeback(alu_result, d_mem[dataAtMemoryIndex]);
     }
     else if (memwrite)
     {
@@ -373,7 +368,7 @@ void CPU::writeback(int result, int d_memval)
 
 void CPU::controlunit(int opcode)
 {
-    //will receive 6-bit opcode value and generate 9 control signals 
+    // will receive 6-bit opcode value and generate 9 control signals 
     // can be seen on page 3 of lecture slide “CSE140_Lecture-4_Processor-3”
     if (opcode == R_TYPE)
     {
